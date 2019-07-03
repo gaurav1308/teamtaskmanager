@@ -18,3 +18,8 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+Route::resource('/{id}/project','ProjectController');
+
+Route::resource('/{id}','UserController');
+
