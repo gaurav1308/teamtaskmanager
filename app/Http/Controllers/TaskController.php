@@ -1,29 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
 
-use App\Project;
+use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class ProjectController extends Controller
+class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        $project=Project::find($id);
-//        foreach ($project->tasks as $task)
-//        {
-//            echo $task->name."</br>";
-//        }
-
-//        return $project->tasks;
-        return view('projects.index',compact('project'));
+        //
     }
 
     /**
@@ -33,8 +25,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-//        return "hi";
-        return view('projects.create');
+        return view('tasks.create');
     }
 
     /**
@@ -46,8 +37,6 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         //
-        User::create($request->all());
-        return redirect('/home');
     }
 
     /**

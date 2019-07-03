@@ -19,7 +19,26 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
+Route:: get('/create_task','TaskController@create');
+
+
 Route::resource('/{id}/project','ProjectController');
+
+Route:: get('/create_project','ProjectController@create');
 
 Route::resource('/{id}','UserController');
 
+
+Route::group(['middleware' => 'auth'], function () {
+
+    // All my routes that needs a logged in user
+    Route:: get('/create_task','TaskController@create');
+
+
+    Route::resource('/{id}/project','ProjectController');
+
+    Route:: get('/create_project','ProjectController@create');
+
+    Route::resource('/{id}','UserController');
+
+});
