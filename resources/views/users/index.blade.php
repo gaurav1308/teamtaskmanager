@@ -13,9 +13,9 @@
             <th>Status</th>
             <th>Sharing Status</th>
             <th>Created By</th>
-            <th>Permissons</th>
-            {{--            <th>Created</th>--}}
-            {{--            <th>Updated</th>--}}
+            <th>Editing Permissons</th>
+                        <th>Created</th>
+                        <th>Updated</th>
         </tr>
         </thead>
         <tbody>
@@ -26,18 +26,31 @@
 
             @foreach($user->projects as $project)
 
-{{--                $role={{$project->pivot->role_id}}--}}
+{{--                {{$role=$project->pivot->role_id}}--}}
                 <tr>
                     <td>{{$project->id}}</td>
                     <td><a href='/{{$project->id}}/project'>{{$project->name}}</a></br></td>
                     <td>{{$project->status}}</td>
                     <td>{{$project->shared}}</td>
                     <td>{{$project->created_by}}</td>
-                    <td>{{$project->pivot->role_id}}</td>
-                    {{--                    <td>{{$task->created_at->diffForHumans()}}</td>--}}
-                    {{--                    <td>{{$task->updated_at->diffForHumans()}}</td>--}}
+                    @if($project->pivot->role_id ==1)
+                        <td>
+                            <a href='/projects'>Edit</a>
+                        </td>
+                    @else
+                        <td>
+                            Don't have editing rights
+                        </td>
+
+                    @endif
+{{--                    <td>{{$project->pivot->role_id ==1  ? "Read and Write":"Read Only"}}</td>--}}
+                                        <td>{{$project->created_at->diffForHumans()}}</td>
+                                        <td>{{$project->updated_at->diffForHumans()}}</td>
 
                 </tr>
+
+
+
             @endforeach
         @endif
         </tbody>

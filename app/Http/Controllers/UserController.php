@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 Use App\User;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -96,5 +97,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showProjects() {
+        $user = Auth::user();
+//        return $user;
+        return view('users.index',compact('user'));
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Task;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -82,5 +84,33 @@ class TaskController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function store2(Request $request){
+        $user = Auth::user();
+        $name = $user->name;
+
+        $data = $request->all();
+        $data['created_by']=$name;
+//        return $request->all();
+        if($data['task_status']=="0")
+        {
+            $data['task_status']="Yet to be started";
+        }
+        if($data['task_status']=="1")
+        {
+            $data['task_status']="Ongoing";
+        }
+        if($data['task_status']=="2")
+        {
+            $data['task_status']="Completed";
+        }
+
+
+//        return $request->all();
+        Task::create($data);
+
+        return redirect('/projects');
+
+        //return "here";
     }
 }

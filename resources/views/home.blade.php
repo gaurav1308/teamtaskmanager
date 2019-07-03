@@ -9,7 +9,7 @@
                     You are logged in!</div>
 
                 <div class="panel-body">
-                    <a href='/{{$id}}'>Your Projects</a></br>
+                    <a href='/projects'>Your Projects</a></br>
                 </div>
             </div>
         </div>

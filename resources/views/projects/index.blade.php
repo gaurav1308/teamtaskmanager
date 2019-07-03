@@ -16,8 +16,9 @@
             <th>Id</th>
             <th>Name</th>
             <th>Created By</th>
-{{--            <th>Created</th>--}}
-{{--            <th>Updated</th>--}}
+            <th>Status</th>
+            <th>Created</th>
+            <th>Updated</th>
         </tr>
         </thead>
         <tbody>
@@ -31,8 +32,9 @@
                     <td>{{$task->id}}</td>
                     <td>{{$task->name}}</td>
                     <td>{{$task->created_by}}</td>
-{{--                    <td>{{$task->created_at->diffForHumans()}}</td>--}}
-{{--                    <td>{{$task->updated_at->diffForHumans()}}</td>--}}
+                    <td>{{$task->task_status}}</td>
+                    <td>{{$task->created_at->diffForHumans()}}</td>
+                    <td>{{$task->updated_at->diffForHumans()}}</td>
 
                 </tr>
             @endforeach
@@ -48,5 +50,5 @@
 {{--        </br>--}}
 
 {{--    @endforeach--}}
-    <button type="button" onclick="window.location.href='/create_project'" >Add a new task</button>
+    <button type="button" onclick="window.location.href='/create_task'" >Add a new task</button>
 @stop

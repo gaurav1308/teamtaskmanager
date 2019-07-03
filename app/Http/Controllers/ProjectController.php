@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Project;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -34,6 +36,7 @@ class ProjectController extends Controller
     public function create()
     {
 //        return "hi";
+
         return view('projects.create');
     }
 
@@ -46,6 +49,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         //
+
         User::create($request->all());
         return redirect('/home');
     }
@@ -93,5 +97,39 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function store1(Request $request){
+        $user = Auth::user();
+        $name = $user->name;
+
+        $data = $request->all();
+        $data['created_by']=$name;
+//        return $request->all();
+        if($data['status']=="0")
+        {
+            $data['status']="Yet to be started";
+        }
+        if($data['status']=="1")
+        {
+            $data['status']="Ongoing";
+        }
+        if($data['status']=="2")
+        {
+            $data['status']="Completed";
+        }
+        if($data['shared']=="1")
+        {
+            $data['shared']="Private";
+        }if($data['shared']=="0")
+        {
+            $data['shared']="Public";
+        }
+//        return $request->all();
+        Project::create($data);
+
+        return redirect('/projects');
+
+        //return "here";
     }
 }
