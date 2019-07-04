@@ -151,10 +151,16 @@ class ProjectController extends Controller
     public function store2(Request $request)
     {
         $data = $request->all();
+        $output  = ProjectUser::where('user_id',$data['user_id'])->where('project_id',$data['project_id'])->get();
+        if(count($output)>0){
+            return redirect('/projects');
+        }
 //        $data ['project_id']=1;
         ProjectUser::create($data);
         return redirect('/projects');
     }
+
+
     public function delete($id)
     {
         $project=Project::find($id);

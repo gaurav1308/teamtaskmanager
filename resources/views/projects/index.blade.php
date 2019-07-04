@@ -36,6 +36,7 @@
                     <td>{{$task->task_status}}</td>
                     <td>{{$task->created_at->diffForHumans()}}</td>
                     <td>{{$task->updated_at->diffForHumans()}}</td>
+{{--                    @if({{\Illuminate\Support\Facades\Auth::user()->}})--}}
                     <td><button type="button" onclick="window.location.href='/task/delete/{{$task->id}}'" >Delete</button></td>
 
 

@@ -35,7 +35,7 @@
                     <td>{{$project->status}}</td>
                     <td>{{$project->shared}}</td>
                     <td>{{$project->created_by}}</td>
-                    @if($project->pivot->role_id ==1)
+                    @if($project->pivot->role_id === 1)
                         <td>
                             <a href='/projects'>Edit</a>
                         </td>
@@ -49,7 +49,7 @@
                     <td>{{$project->created_at->diffForHumans()}}</td>
                     <td>{{$project->updated_at->diffForHumans()}}</td>
                     <td>
-                        @if($project->pivot->role_id ==1 )
+                        @if($project->pivot->role_id === 1 )
 {{--                            <i class="btn btn-danger"> Delete Delete</i>--}}
                         <button type="button" onclick="window.location.href='/project/delete/{{$project->id}}'" >Delete</button></td>
                         @endif
