@@ -19,6 +19,7 @@
             <th>Status</th>
             <th>Created</th>
             <th>Updated</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -35,6 +36,8 @@
                     <td>{{$task->task_status}}</td>
                     <td>{{$task->created_at->diffForHumans()}}</td>
                     <td>{{$task->updated_at->diffForHumans()}}</td>
+                    <td><button type="button" onclick="window.location.href='/task/delete/{{$task->id}}'" >Delete</button></td>
+
 
                 </tr>
             @endforeach
@@ -50,5 +53,10 @@
 {{--        </br>--}}
 
 {{--    @endforeach--}}
-    <button type="button" onclick="window.location.href='/create_task'" >Add a new task</button>
+{{--    <button type="button" onclick="window.location.href='/create_task'" >Add a new task</button>--}}
+    {!! Form::open(['method'=>'post','action'=>['TaskController@create1',$project->id],'file'=>true]) !!}
+    <div class="form-group">
+    {!! Form::submit('Create Task',['class'=>'btn btn-primary']) !!}
+    </div>
+    {!! Form::close() !!}
 @stop

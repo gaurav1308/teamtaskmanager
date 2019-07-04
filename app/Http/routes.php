@@ -32,19 +32,28 @@ Route::get('/home', 'HomeController@index');
 Route::group(['middleware' => 'auth'], function () {
     Route:: get('/create_project','ProjectController@create');
 
+    Route::get('/project/people/{id}','ProjectController@add_user');
+
     Route::post('/project/create', 'ProjectController@store1');
 
+    Route::get('/project/delete/{id}', 'ProjectController@delete');
+
+    Route::get('/task/delete/{id}', 'TaskController@delete');
+
+    Route::post('/add/user', 'ProjectController@store2');
+
     Route::post('/task/create', 'TaskController@store2');
-    // All my routes that needs a logged in user
+
     Route:: get('/create_task','TaskController@create');
 
-//    Route::post('/project/create', 'ProjectController@store');
-
+    Route:: post('create/tasks/{id}','TaskController@create1')->name('project.tasks.create');
 
     Route::get('/{id}/project','ProjectController@index');
 
-//    Route:: get('/create_project','ProjectController@create');
 
     Route::get('/projects','UserController@showProjects');
 
+    Route::resource('/tasks','TaskController');
+
+    Route :: get('/act','TaskController@search');
 });

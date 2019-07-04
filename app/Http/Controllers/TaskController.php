@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Project;
 use App\Task;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,7 @@ class TaskController extends Controller
      */
     public function create()
     {
+
         return view('tasks.create');
     }
 
@@ -113,4 +115,43 @@ class TaskController extends Controller
 
         //return "here";
     }
+    public function create1($id)
+    {
+//        return $id;
+        return view('tasks.create',compact('id'));
+    }
+     public function search()
+     {
+         $request=request()->search;
+         $user =Auth::user();
+         $proj=$user->projects;
+         $tasks= Task::where ('name','LIKE',"%$request%")->get();
+         foreach ($tasks as $task) {
+//             echo "hi";
+             $flag = 1;
+             foreach ($proj as $project) {
+                 if ($task->project_id == $project->id) {
+                     $flag = 0;
+                 }
+             }
+             if ($flag == 1) {
+                 $task->delete();
+             }
+
+         }
+//         $projects=Project::where('name','LIKE',"%$request%")->get();
+
+
+
+
+
+//         return $tasks;
+         return view('projects.search',compact('tasks'));
+     }
+     public function delete($id)
+     {
+         $task=Task::find($id);
+         $task->delete();
+         return redirect('/projects');
+     }
 }

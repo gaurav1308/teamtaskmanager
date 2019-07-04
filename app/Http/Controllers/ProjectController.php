@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\ProjectUser;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -73,7 +74,8 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        $project= Project::findorfail($id);
+        return view('projects.edit',compact('project'));
     }
 
     /**
@@ -125,11 +127,50 @@ class ProjectController extends Controller
         {
             $data['shared']="Public";
         }
-//        return $request->all();
-        Project::create($data);
+//        return $data;
+        $project=Project::create($data);
+
+        $link['user_id']=$user->id;
+        $link['project_id']=$project->id;
+        $link['role_id']=1;
+//
+        ProjectUser::create($link);
 
         return redirect('/projects');
 
         //return "here";
     }
+
+
+    public function add_user($id)
+    {
+//        return $id;
+        return view('projects.addUser',compact('id'));
+    }
+
+    public function store2(Request $request)
+    {
+        $data = $request->all();
+//        $data ['project_id']=1;
+        ProjectUser::create($data);
+        return redirect('/projects');
+    }
+    public function delete($id)
+    {
+        $project=Project::find($id);
+//        $project->tasks->delete();
+//        $project->projectusers->delete();
+        foreach($project->tasks as $task)
+        {
+            $task->delete();
+        }
+        foreach($project->projectusers as $projectuser)
+        {
+            $projectuser->delete();
+        }
+
+        $project->delete();
+        return redirect('/projects');
+    }
+
 }

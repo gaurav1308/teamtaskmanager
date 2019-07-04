@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <h1>Create Task</h1>
+    <h1>Edit Task</h1>
     {!! Form::open(['method'=>'POST','action'=>'TaskController@store2','file'=>true]) !!}
 
     <div class = "form-group">
@@ -15,7 +15,7 @@
 
     <div class = "form-group">
         {!! Form::label('project_id','Project Id:') !!}
-        {!! Form::select('project_id',array($id => $id),['class'=>'form-control']) !!}
+        {!! Form::text('project_id',null,['class'=>'form-control']) !!}
     </div>
 
     <div class = "form-group">
@@ -32,3 +32,4 @@
 
     {{--    @include('includes.form_error')--}}
 @stop
+

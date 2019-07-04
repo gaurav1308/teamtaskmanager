@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <h1>{{$user->name}} , Your on going projects are:</h1>
+    <h1>{{$user->name}} , Your projects are:</h1>
     <table class="table">
         <thead>
         <tr>
@@ -14,8 +14,10 @@
             <th>Sharing Status</th>
             <th>Created By</th>
             <th>Editing Permissons</th>
-                        <th>Created</th>
-                        <th>Updated</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Delete</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -44,10 +46,17 @@
 
                     @endif
 {{--                    <td>{{$project->pivot->role_id ==1  ? "Read and Write":"Read Only"}}</td>--}}
-                                        <td>{{$project->created_at->diffForHumans()}}</td>
-                                        <td>{{$project->updated_at->diffForHumans()}}</td>
-
-                </tr>
+                    <td>{{$project->created_at->diffForHumans()}}</td>
+                    <td>{{$project->updated_at->diffForHumans()}}</td>
+                    <td>
+                        @if($project->pivot->role_id ==1 )
+{{--                            <i class="btn btn-danger"> Delete Delete</i>--}}
+                        <button type="button" onclick="window.location.href='/project/delete/{{$project->id}}'" >Delete</button></td>
+                        @endif
+                @if($project->pivot->role_id ==1 && $project->shared=="Public")
+                    <td><button type="button" onclick="window.location.href='/project/people/{{$project->id}}'" >Add people</button></td>
+                    @endif
+                    </tr>
 
 
 
