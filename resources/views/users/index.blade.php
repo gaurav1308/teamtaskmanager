@@ -17,7 +17,7 @@
             <th>Created</th>
             <th>Updated</th>
             <th>Delete</th>
-            <th></th>
+            <th>Add new people to list</th>
         </tr>
         </thead>
         <tbody>
@@ -37,7 +37,7 @@
                     <td>{{$project->created_by}}</td>
                     @if($project->pivot->role_id === 1)
                         <td>
-                            <a href='/projects'>Edit</a>
+                            <a href='/edit/{{$project->id}}'>Edit</a>
                         </td>
                     @else
                         <td>

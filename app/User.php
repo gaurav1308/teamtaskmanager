@@ -35,8 +35,8 @@ class User extends Authenticatable
         ->withPivot('role_id');
     }
 
-    public function projectusers()
-    {
-        return $this->hasM('App\ProjectUser');
-    }
+//    public function projectusers()
+//    {
+//        return $this->hasM('App\ProjectUser');
+//    }
 }

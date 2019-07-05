@@ -62,7 +62,34 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $task=Task::find($id);
+        $flag=1;
+        $permission=2;
+
+        if($task==null)
+        {
+            return "Task doesn't exits";
+        }
+        foreach(Auth::user()->projects as $project)
+        {
+            if($task->project_id==$project->id)
+            {
+                $flag=0;
+                $permission=$project->pivot->role_id;
+                break;
+            }
+        }
+        if($task==null)
+        {
+            return "Task doesn't exits";
+        }
+
+        if($flag==0&&$permission==1)
+        {
+            return view ('tasks.edit',compact('task'));
+        }
+        return " You are not authorised for this";
     }
 
     /**
@@ -74,7 +101,12 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $task  = Task::find($id);
+        $input  = $request->all();
+        $task->name = $input['name'];
+        $task->task_status = $input['task_status'];
+        $task->save();
+        return redirect('/projects');
     }
 
     /**
@@ -93,22 +125,6 @@ class TaskController extends Controller
 
         $data = $request->all();
         $data['created_by']=$name;
-//        return $request->all();
-        if($data['task_status']=="0")
-        {
-            $data['task_status']="Yet to be started";
-        }
-        if($data['task_status']=="1")
-        {
-            $data['task_status']="Ongoing";
-        }
-        if($data['task_status']=="2")
-        {
-            $data['task_status']="Completed";
-        }
-
-
-//        return $request->all();
         Task::create($data);
 
         return redirect('/projects');
@@ -154,4 +170,7 @@ class TaskController extends Controller
          $task->delete();
          return redirect('/projects');
      }
+
+
+
 }

@@ -9,7 +9,6 @@
 
 
 
-
     <table class="table">
         <thead>
         <tr>
@@ -19,6 +18,7 @@
             <th>Status</th>
             <th>Created</th>
             <th>Updated</th>
+            <th></th>
             <th></th>
         </tr>
         </thead>
@@ -37,27 +37,21 @@
                     <td>{{$task->created_at->diffForHumans()}}</td>
                     <td>{{$task->updated_at->diffForHumans()}}</td>
 {{--                    @if({{\Illuminate\Support\Facades\Auth::user()->}})--}}
-                    <td><button type="button" onclick="window.location.href='/task/delete/{{$task->id}}'" >Delete</button></td>
+                    @if($role_id==1)
+                            <td><button type="button" onclick="window.location.href='/task/delete/{{$task->id}}'" >Delete</button></td>
+                            <td><button type="button" onclick="window.location.href='/task/edit/{{$task->id}}'" >Edit</button></td>
 
-
+                    @endif
                 </tr>
             @endforeach
         @endif
         </tbody>
     </table>
-{{--    @foreach($project->tasks as $task)--}}
-
-{{--        {{$task->name}}--}}
-{{--    </br>--}}
-{{--        <pre class="tab"></pre>--}}
-{{--        <button type="button" onclick="window.location.href='/edit'" >edit</button></br>--}}
-{{--        </br>--}}
-
-{{--    @endforeach--}}
-{{--    <button type="button" onclick="window.location.href='/create_task'" >Add a new task</button>--}}
-    {!! Form::open(['method'=>'post','action'=>['TaskController@create1',$project->id],'file'=>true]) !!}
-    <div class="form-group">
-    {!! Form::submit('Create Task',['class'=>'btn btn-primary']) !!}
-    </div>
-    {!! Form::close() !!}
+    @if($role_id==1)
+        {!! Form::open(['method'=>'post','action'=>['TaskController@create1',$project->id],'file'=>true]) !!}
+        <div class="form-group">
+        {!! Form::submit('Create Task',['class'=>'btn btn-primary']) !!}
+        </div>
+        {!! Form::close() !!}
+    @endif
 @stop

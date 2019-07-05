@@ -5,7 +5,7 @@
 @section('content')
 
     <h1>Edit Task</h1>
-    {!! Form::open(['method'=>'POST','action'=>'TaskController@store2','file'=>true]) !!}
+    {!! Form::model($task,['method'=>'PUT','action'=>['TaskController@update',$task->id],'file'=>true]) !!}
 
     <div class = "form-group">
         {!! Form::label('name','Name:') !!}
@@ -14,19 +14,14 @@
 
 
     <div class = "form-group">
-        {!! Form::label('project_id','Project Id:') !!}
-        {!! Form::text('project_id',null,['class'=>'form-control']) !!}
-    </div>
-
-    <div class = "form-group">
         {!! Form::label('task_status','Task Status:') !!}
-        {!! Form::select('task_status',array(0=>'Yet to be started',1=>'Ongoing',2=>'Completed'),['class'=>'form-control']) !!}
+        {!! Form::select('task_status',array('Yet to be started'=>'Yet to be started','Ongoing'=>'Ongoing','Completed'=>'Completed'),['class'=>'form-control']) !!}
     </div>
 
 
 
     <div class="form-group">
-        {!! Form::submit('Create Task',['class'=>'btn btn-primary']) !!}
+        {!! Form::submit('Edit Task',['class'=>'btn btn-primary']) !!}
     </div>
     {!! Form::close() !!}
 

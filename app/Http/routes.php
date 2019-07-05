@@ -19,26 +19,18 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
-//Route:: get('/create_task','TaskController@create');
-//
-//
-//Route::resource('/{id}/project','ProjectController');
-//
-//Route:: get('/create_project','ProjectController@create');
-//
-//Route::resource('/{id}','UserController');
-
 
 Route::group(['middleware' => 'auth'], function () {
-    Route:: get('/create_project','ProjectController@create');
 
-    Route::get('/project/people/{id}','ProjectController@add_user');
+    Route:: get('/create_project','ProjectController@create'); //create new project
 
-    Route::post('/project/create', 'ProjectController@store1');
+    Route::get('/project/people/{id}','ProjectController@add_user'); //add no user
 
-    Route::get('/project/delete/{id}', 'ProjectController@delete');
+    Route::post('/project/create', 'ProjectController@store1'); //adding data to list
 
-    Route::get('/task/delete/{id}', 'TaskController@delete');
+    Route::get('/project/delete/{id}', 'ProjectController@delete'); //delete a project
+
+    Route::get('/task/delete/{id}', 'TaskController@delete'); ///delete a task
 
     Route::post('/add/user', 'ProjectController@store2');
 
@@ -46,14 +38,23 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route:: get('/create_task','TaskController@create');
 
-    Route:: post('create/tasks/{id}','TaskController@create1')->name('project.tasks.create');
+    Route:: post('create/tasks/{id}','TaskController@create1')->name('project.tasks.create');//create new task in a project
 
     Route::get('/{id}/project','ProjectController@index');
 
-
-    Route::get('/projects','UserController@showProjects');
+    Route::get('/projects','UserController@showProjects');  // shows projects of a user
 
     Route::resource('/tasks','TaskController');
 
-    Route :: get('/act','TaskController@search');
+    Route ::put('/update/project/{id}','ProjectController@update');// updating details of a project
+
+    Route ::put('/update/task/{id}','ProjectController@update');//updating task details
+
+    Route :: get('/act','TaskController@search'); //search action
+
+    Route:: get('/edit/{id}','ProjectController@edit');//sending edit  request of a project
+
+    Route:: get('task/edit/{id}','TaskController@edit'); //sending edit request of atask
+
+
 });

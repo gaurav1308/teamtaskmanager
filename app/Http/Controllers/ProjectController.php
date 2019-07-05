@@ -20,13 +20,34 @@ class ProjectController extends Controller
     public function index($id)
     {
         $project=Project::find($id);
-//        foreach ($project->tasks as $task)
-//        {
-//            echo $task->name."</br>";
-//        }
+        $user=Auth::user();
+        $flag=1;
+        $permission=2;
+        if ($project==null) {
+            return "This project does not exist";;
+        }
 
-//        return $project->tasks;
-        return view('projects.index',compact('project'));
+        foreach($user->projects as $proj)
+        {
+            if($proj->id==$id)
+            {
+                $flag=0;
+                $permission=$proj->pivot->role_id;
+            }
+        }
+        if($flag==0&&$permission==1) {
+
+            foreach (Auth::user()->projects as $proj) {
+                if($proj->id==$project->id)
+                {
+                    $role_id=$proj->pivot->role_id;
+                }
+
+                }
+                return view('projects.index', compact('project','role_id'));
+
+        }
+        return "You are not authorized for this project";
     }
 
     /**
@@ -74,8 +95,29 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        $project= Project::findorfail($id);
-        return view('projects.edit',compact('project'));
+
+        $project=Project::find($id);
+        $user=Auth::user();
+        $flag=1;
+        $permission=2;
+        if ($project==null) {
+            return "This project does not exist";;
+        }
+        foreach($user->projects as $proj)
+        {
+            if($proj->id==$id)
+            {
+                $flag=0;
+                $permission=$proj->pivot->role_id;
+                break;
+            }
+        }
+        if($flag==0&&$permission==1) {
+                return view('projects.edit', compact('project'));
+
+        }
+        return "You can't edit this project";
+//        return view ('projects.edit',compact('project'));
     }
 
     /**
@@ -87,7 +129,14 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $project  = Project::find($id);
+        $input  = $request->all();
+        $project->name = $input['name'];
+        $project->shared =$input['shared'];
+        $project->status = $input['status'];
+        $project->save();
+        return redirect('/projects');
+
     }
 
     /**
@@ -101,6 +150,9 @@ class ProjectController extends Controller
         //
     }
 
+
+
+
     public function store1(Request $request){
         $user = Auth::user();
         $name = $user->name;
@@ -108,25 +160,7 @@ class ProjectController extends Controller
         $data = $request->all();
         $data['created_by']=$name;
 //        return $request->all();
-        if($data['status']=="0")
-        {
-            $data['status']="Yet to be started";
-        }
-        if($data['status']=="1")
-        {
-            $data['status']="Ongoing";
-        }
-        if($data['status']=="2")
-        {
-            $data['status']="Completed";
-        }
-        if($data['shared']=="1")
-        {
-            $data['shared']="Private";
-        }if($data['shared']=="0")
-        {
-            $data['shared']="Public";
-        }
+
 //        return $data;
         $project=Project::create($data);
 
@@ -145,7 +179,28 @@ class ProjectController extends Controller
     public function add_user($id)
     {
 //        return $id;
-        return view('projects.addUser',compact('id'));
+        $project=Project::find($id);
+        $user=Auth::user();
+        $flag=1;
+        $permission=2;
+        if ($project==null) {
+            return "This project does not exist";;
+        }
+        foreach($user->projects as $proj)
+        {
+            if($proj->id==$id)
+            {
+                $flag=0;
+                $permission=$proj->pivot->role_id;
+                break;
+            }
+        }
+        if($flag==0&&$permission==1) {
+            return view('projects.addUser',compact('id'));
+
+        }
+        return "You aren't authorized to add user to this project";
+
     }
 
     public function store2(Request $request)
@@ -178,5 +233,10 @@ class ProjectController extends Controller
         $project->delete();
         return redirect('/projects');
     }
+
+
+
+
+
 
 }
