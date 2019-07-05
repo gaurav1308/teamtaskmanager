@@ -45,7 +45,7 @@
             </div>
             @if(Auth::user()!=null)
             <form action="/act" method="get" class="nav navbar-nav">
-                <input type="text" placeholder="Search.." name="search">
+                <input type="text" placeholder="Search tasks...." name="search">
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
             @endif
