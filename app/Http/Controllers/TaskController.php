@@ -106,7 +106,8 @@ class TaskController extends Controller
         $task->name = $input['name'];
         $task->task_status = $input['task_status'];
         $task->save();
-        return redirect('/projects');
+//        return redirect('/projects');
+        return redirect('/'.$task->project_id .'/project');
     }
 
     /**
@@ -127,7 +128,8 @@ class TaskController extends Controller
         $data['created_by']=$name;
         Task::create($data);
 
-        return redirect('/projects');
+//        return redirect('/projects');
+        return redirect('/'.$data['project_id'] .'/project');
 
         //return "here";
     }
@@ -168,7 +170,8 @@ class TaskController extends Controller
      {
          $task=Task::find($id);
          $task->delete();
-         return redirect('/projects');
+//         return redirect('/projects');
+         return redirect('/'.$task->project_id .'/project');
      }
 
 

@@ -22,7 +22,7 @@ class ProjectController extends Controller
         $project=Project::find($id);
         $user=Auth::user();
         $flag=1;
-        $permission=2;
+//        $permission=2;
         if ($project==null) {
             return "This project does not exist";;
         }
@@ -32,10 +32,10 @@ class ProjectController extends Controller
             if($proj->id==$id)
             {
                 $flag=0;
-                $permission=$proj->pivot->role_id;
+//                $permission=$proj->pivot->role_id;
             }
         }
-        if($flag==0&&$permission==1) {
+        if($flag==0) {
 
             foreach (Auth::user()->projects as $proj) {
                 if($proj->id==$project->id)
@@ -171,6 +171,7 @@ class ProjectController extends Controller
         ProjectUser::create($link);
 
         return redirect('/projects');
+//        return redirect('/'.$project_id .'/project');
 
         //return "here";
     }

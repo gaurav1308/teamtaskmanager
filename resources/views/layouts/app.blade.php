@@ -43,12 +43,7 @@
                     Team Task Manager
                 </a>
             </div>
-            @if(Auth::user()!=null)
-            <form action="/act" method="get" class="nav navbar-nav">
-                <input type="text" placeholder="Search tasks...." name="search">
-                <button type="submit"><i class="fa fa-search"></i></button>
-            </form>
-            @endif
+
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
@@ -74,6 +69,12 @@
                     @endif
                 </ul>
             </div>
+            @if(Auth::user()!=null)
+                <form action="/act" method="get" class="nav navbar-nav">
+                    <input type="text" placeholder="Search tasks...." name="search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            @endif
         </div>
     </nav>
 
